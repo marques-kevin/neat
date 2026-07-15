@@ -1,5 +1,7 @@
 export type NotificationPriorityLevel = "high" | "medium" | "low";
 
+export type NotificationFilter = "all" | "unread";
+
 export interface NotificationListItemViewModel {
   id: string;
   title: string;
@@ -10,4 +12,6 @@ export interface NotificationListItemViewModel {
   isRead: boolean;
   isPinned: boolean;
   isSelected: boolean;
+  initials: string;
+  avatarClassName: string;
 }

@@ -1,6 +1,12 @@
-import { Pin } from "lucide-react";
-import { Badge } from "@app/ui/components/ui/badge";
+import { ArrowRight, MoreHorizontal, Pin } from "lucide-react";
+import { Avatar, AvatarFallback } from "@app/ui/components/ui/avatar";
 import { Button } from "@app/ui/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@app/ui/components/ui/dropdown-menu";
 import { cn } from "@app/ui/lib/utils";
 import type { NotificationListItemViewModel } from "../NotificationList/NotificationList.types.js";
 
@@ -10,7 +16,7 @@ export interface NotificationItemProps {
   pinLabel: string;
   unpinLabel: string;
   dismissLabel: string;
-  openLabel?: string;
+  moreLabel: string;
   onSelect: (id: string) => void;
   onOpen: (id: string) => void;
   onMarkAsRead: (id: string) => void;
@@ -18,28 +24,13 @@ export interface NotificationItemProps {
   onDismiss: (id: string) => void;
 }
 
-const priorityStyles = {
-  high: "border-l-destructive bg-destructive/5",
-  medium: "border-l-chart-1 bg-chart-1/5",
-  low: "border-l-border bg-card",
-} as const;
-
-const priorityBadge: Record<
-  NotificationListItemViewModel["priority"],
-  "destructive" | "secondary" | "outline"
-> = {
-  high: "destructive",
-  medium: "secondary",
-  low: "outline",
-};
-
 export function NotificationItem({
   item,
   markReadLabel,
   pinLabel,
   unpinLabel,
   dismissLabel,
-  openLabel = "Open",
+  moreLabel,
   onSelect,
   onOpen,
   onMarkAsRead,
@@ -49,74 +40,65 @@ export function NotificationItem({
   return (
     <article
       className={cn(
-        "border-l-4 border-b border-border px-4 py-3 transition-colors",
-        priorityStyles[item.priority],
-        item.isSelected && "ring-2 ring-inset ring-ring",
-        item.isRead && "opacity-70",
+        "group relative flex cursor-pointer items-center gap-3 px-4 py-3.5 transition-colors",
+        !item.isRead && "bg-violet-50/70",
+        item.isSelected && "bg-muted/80",
+        item.isRead && "hover:bg-muted/40",
       )}
-      onClick={() => onSelect(item.id)}
+      onClick={() => {
+        onSelect(item.id);
+        onOpen(item.id);
+      }}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
-            {item.isPinned ? <Pin className="size-3.5 text-muted-foreground" aria-hidden /> : null}
-            <h3 className="truncate text-sm font-semibold text-foreground">{item.title}</h3>
-            <Badge variant={priorityBadge[item.priority]} className="capitalize">
-              {item.priority}
-            </Badge>
-          </div>
-          <p className="mt-1 text-xs text-muted-foreground">
-            {item.repo} · {item.author}
-          </p>
-          <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{item.bodyPreview}</p>
+      <Avatar size="lg" className="shadow-sm ring-2 ring-background">
+        <AvatarFallback className={cn("text-xs font-semibold", item.avatarClassName)}>
+          {item.initials}
+        </AvatarFallback>
+      </Avatar>
+
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center gap-1.5">
+          {item.isPinned ? (
+            <Pin className="size-3 shrink-0 text-muted-foreground" aria-hidden />
+          ) : null}
+          <h3 className="truncate text-sm font-semibold text-foreground">{item.title}</h3>
         </div>
-        <div className="flex shrink-0 flex-col gap-1">
-          <Button
-            type="button"
-            size="xs"
-            onClick={(event) => {
-              event.stopPropagation();
-              onOpen(item.id);
-            }}
-          >
-            {openLabel}
-          </Button>
-          {!item.isRead ? (
+        <p className="mt-0.5 truncate text-sm text-muted-foreground">{item.bodyPreview}</p>
+      </div>
+
+      <div className="flex shrink-0 items-center gap-0.5">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
             <Button
               type="button"
-              size="xs"
-              variant="outline"
-              onClick={(event) => {
-                event.stopPropagation();
-                onMarkAsRead(item.id);
-              }}
+              variant="ghost"
+              size="icon-sm"
+              className="opacity-0 group-hover:opacity-100 data-[state=open]:opacity-100"
+              aria-label={moreLabel}
+              onClick={(event) => event.stopPropagation()}
             >
-              {markReadLabel}
+              <MoreHorizontal className="size-4" />
             </Button>
-          ) : null}
-          <Button
-            type="button"
-            size="xs"
-            variant="outline"
-            onClick={(event) => {
-              event.stopPropagation();
-              onPin(item.id);
-            }}
-          >
-            {item.isPinned ? unpinLabel : pinLabel}
-          </Button>
-          <Button
-            type="button"
-            size="xs"
-            variant="destructive"
-            onClick={(event) => {
-              event.stopPropagation();
-              onDismiss(item.id);
-            }}
-          >
-            {dismissLabel}
-          </Button>
-        </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" onClick={(event) => event.stopPropagation()}>
+            {!item.isRead ? (
+              <DropdownMenuItem onSelect={() => onMarkAsRead(item.id)}>
+                {markReadLabel}
+              </DropdownMenuItem>
+            ) : null}
+            <DropdownMenuItem onSelect={() => onPin(item.id)}>
+              {item.isPinned ? unpinLabel : pinLabel}
+            </DropdownMenuItem>
+            <DropdownMenuItem variant="destructive" onSelect={() => onDismiss(item.id)}>
+              {dismissLabel}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <ArrowRight
+          className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5"
+          aria-hidden
+        />
       </div>
     </article>
   );

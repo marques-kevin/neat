@@ -1,48 +1,74 @@
-import { Badge } from "@app/ui/components/ui/badge";
+import { Bell, Search } from "lucide-react";
 import { Button } from "@app/ui/components/ui/button";
+import { Input } from "@app/ui/components/ui/input";
+import { cn } from "@app/ui/lib/utils";
 
 export interface AppHeaderProps {
-  appName: string;
+  searchPlaceholder: string;
+  searchValue: string;
   unreadCount: number;
-  unreadLabel: string;
+  notificationsLabel: string;
   focusMode: boolean;
   focusModeLabel: string;
   syncLabel: string;
   isLoading: boolean;
+  onSearchChange: (value: string) => void;
   onToggleFocusMode: () => void;
   onSync: () => void;
 }
 
 export function AppHeader({
-  appName,
+  searchPlaceholder,
+  searchValue,
   unreadCount,
-  unreadLabel,
+  notificationsLabel,
   focusMode,
   focusModeLabel,
   syncLabel,
   isLoading,
+  onSearchChange,
   onToggleFocusMode,
   onSync,
 }: AppHeaderProps) {
   return (
-    <header className="flex items-center justify-between gap-4 border-b border-border bg-card px-6 py-4">
-      <div>
-        <h1 className="text-lg font-semibold text-foreground">{appName}</h1>
-        <p className="text-sm text-muted-foreground">{unreadLabel}</p>
+    <header className="mx-auto flex w-full max-w-md items-center gap-2 px-4 pt-8 pb-4 sm:px-0">
+      <div className="relative flex-1">
+        <Search
+          className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+          aria-hidden
+        />
+        <Input
+          value={searchValue}
+          onChange={(event) => onSearchChange(event.target.value)}
+          placeholder={searchPlaceholder}
+          className="h-11 rounded-xl border-border/80 bg-card pl-9 shadow-sm"
+        />
       </div>
-      <div className="flex items-center gap-2">
-        <Badge variant="default">{unreadCount}</Badge>
-        <Button
-          type="button"
-          variant={focusMode ? "default" : "outline"}
-          onClick={onToggleFocusMode}
-        >
-          {focusModeLabel}
-        </Button>
-        <Button type="button" variant="outline" onClick={onSync} disabled={isLoading}>
-          {syncLabel}
-        </Button>
-      </div>
+
+      <Button
+        type="button"
+        variant="outline"
+        size="icon"
+        className="relative size-11 shrink-0 rounded-xl border-border/80 bg-card shadow-sm"
+        aria-label={notificationsLabel}
+        onClick={onSync}
+        disabled={isLoading}
+        title={syncLabel}
+      >
+        <Bell className="size-4" />
+        {unreadCount > 0 ? (
+          <span className="absolute top-2.5 right-2.5 size-2 rounded-full bg-red-500 ring-2 ring-card" />
+        ) : null}
+      </Button>
+
+      <Button
+        type="button"
+        variant={focusMode ? "default" : "outline"}
+        className={cn("hidden h-11 shrink-0 rounded-xl sm:inline-flex")}
+        onClick={onToggleFocusMode}
+      >
+        {focusModeLabel}
+      </Button>
     </header>
   );
 }

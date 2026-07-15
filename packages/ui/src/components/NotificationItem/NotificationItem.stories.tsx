@@ -13,17 +13,27 @@ const baseItem: NotificationListItemViewModel = {
   isRead: false,
   isPinned: false,
   isSelected: false,
+  initials: "BO",
+  avatarClassName: "bg-sky-100 text-sky-700",
 };
 
 const meta = {
   title: "Components/NotificationItem",
   component: NotificationItem,
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div className="mx-auto max-w-md overflow-hidden rounded-2xl border bg-card shadow-sm">
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     markReadLabel: "Mark read",
     pinLabel: "Pin",
     unpinLabel: "Unpin",
     dismissLabel: "Dismiss",
+    moreLabel: "More actions",
     onSelect: fn(),
     onOpen: fn(),
     onMarkAsRead: fn(),
@@ -35,7 +45,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const HighPriority: Story = {
+export const Unread: Story = {
   args: { item: baseItem },
 };
 
@@ -59,6 +69,8 @@ export const LowPriority: Story = {
       title: "Someone starred org/legacy-tool",
       priority: "low",
       bodyPreview: "Your repository has a new star",
+      initials: "GH",
+      avatarClassName: "bg-amber-100 text-amber-800",
     },
   },
 };

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useIntl } from "react-intl";
 import {
   refreshNotificationFeedThunk,
@@ -23,14 +24,16 @@ export function AppShellContainer() {
   const { status } = useAppSelector(selectNotificationsState);
   const { focusMode } = useAppSelector(selectUiState);
   const locale = useAppSelector(selectLocale);
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-muted/40 text-foreground">
+      <div className="min-h-screen bg-[linear-gradient(180deg,#f3f4f6_0%,#eef0f3_45%,#f7f7f8_100%)] text-foreground">
         <AppHeader
-          appName={formatMessage({ id: "app.name" })}
+          searchPlaceholder={formatMessage({ id: "notifications.search" })}
+          searchValue={searchQuery}
           unreadCount={unreadCount}
-          unreadLabel={formatMessage({ id: "notifications.unread" }, { count: unreadCount })}
+          notificationsLabel={formatMessage({ id: "notifications.title" })}
           focusMode={focusMode}
           focusModeLabel={formatMessage({
             id: focusMode ? "ui.focusMode.on" : "ui.focusMode.off",
@@ -41,6 +44,7 @@ export function AppShellContainer() {
               : formatMessage({ id: "actions.sync" })
           }
           isLoading={status === "loading"}
+          onSearchChange={setSearchQuery}
           onToggleFocusMode={() => {
             dispatch(toggleFocusMode());
             dispatch(refreshNotificationFeedThunk());
@@ -48,8 +52,10 @@ export function AppShellContainer() {
           onSync={() => dispatch(syncNotificationsThunk())}
         />
 
-        <main className="mx-auto max-w-4xl space-y-6 px-6 py-6">
-          <div className="flex justify-end">
+        <main className="mx-auto w-full max-w-md px-4 pb-10 sm:px-0">
+          <NotificationListContainer searchQuery={searchQuery} />
+
+          <div className="mt-6 flex justify-center">
             <LanguageSwitcher
               label={formatMessage({ id: "settings.language" })}
               value={locale}
@@ -59,8 +65,6 @@ export function AppShellContainer() {
               onChange={(nextLocale) => dispatch(setLocaleThunk(nextLocale))}
             />
           </div>
-
-          <NotificationListContainer />
         </main>
       </div>
     </TooltipProvider>
