@@ -1,1 +1,2 @@
-@import "@app/ui/styles.css";
+/* Theme + Tailwind entry lives in @app/ui; @source paths resolve relative to that file. */
+@import "../../ui/src/styles.css";
