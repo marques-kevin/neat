@@ -28,7 +28,7 @@ export function AppShellContainer() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-[linear-gradient(180deg,#f3f4f6_0%,#eef0f3_45%,#f7f7f8_100%)] text-foreground">
+      <div className="app-shell min-h-screen bg-[linear-gradient(180deg,#f3f4f6_0%,#eef0f3_45%,#f7f7f8_100%)] text-foreground">
         <AppHeader
           searchPlaceholder={formatMessage({ id: "notifications.search" })}
           searchValue={searchQuery}
@@ -52,10 +52,10 @@ export function AppShellContainer() {
           onSync={() => dispatch(syncNotificationsThunk())}
         />
 
-        <main className="mx-auto w-full max-w-md px-4 pb-10 sm:px-0">
+        <main className="app-shell-main mx-auto w-full max-w-md px-4 pb-10 sm:px-0">
           <NotificationListContainer searchQuery={searchQuery} />
 
-          <div className="mt-6 flex justify-center">
+          <div className="app-shell-footer mt-6 flex justify-center">
             <LanguageSwitcher
               label={formatMessage({ id: "settings.language" })}
               value={locale}

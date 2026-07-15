@@ -7,14 +7,28 @@ Dev notification triage app — Étape 1 (in-memory + Redux + dumb components).
 ```bash
 pnpm install
 pnpm dev              # web app → http://localhost:5173
+pnpm desktop          # Tauri menu-bar app (requires Rust)
 pnpm storybook        # design system + components → http://localhost:6006
 ```
+
+### Desktop (Tauri / macOS menu bar)
+
+Prerequisites: [Rust](https://rustup.rs/) + Xcode Command Line Tools.
+
+```bash
+pnpm desktop          # click the tray icon to open the panel
+pnpm desktop:build    # produce a .app / installer
+```
+
+Left-click the menu-bar icon to toggle the panel. Right-click → Quit Triage.
 
 ## Tooling
 
 | Command              | Description                            |
 | -------------------- | -------------------------------------- |
 | `pnpm dev`           | Vite web app                           |
+| `pnpm desktop`       | Tauri menu-bar app                     |
+| `pnpm desktop:build` | Bundle the desktop app                 |
 | `pnpm storybook`     | Storybook (design system + components) |
 | `pnpm test`          | Vitest (core + store + ui)             |
 | `pnpm test:coverage` | Vitest with coverage                   |
@@ -35,7 +49,8 @@ Pre-commit hook (husky + lint-staged): format + lint on staged files.
 | `@app/infrastructure` | In-memory adapters (Étape 1)                         |
 | `@app/store`          | Redux Toolkit — thunks → use cases                   |
 | `@app/ui`             | Design system (shadcn) + dumb components + Storybook |
-| `@app/web`            | Vite dev shell                                       |
+| `@app/web`            | Vite web shell                                       |
+| `@app/desktop`        | Tauri menu-bar shell                                 |
 
 ## Design system
 

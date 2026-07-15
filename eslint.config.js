@@ -22,6 +22,7 @@ const boundaryElements = [
   },
   { type: "ui-other", pattern: "packages/ui/src/**", mode: "full" },
   { type: "web", pattern: "packages/web/src/**", mode: "full" },
+  { type: "desktop", pattern: "packages/desktop/src/**", mode: "full" },
 ];
 
 export default tseslint.config(
@@ -32,6 +33,7 @@ export default tseslint.config(
       "**/.turbo/**",
       "**/coverage/**",
       "**/storybook-static/**",
+      "**/src-tauri/**",
       "**/*.config.{js,cjs,mjs,ts}",
       "eslint.config.js",
       "prettier.config.js",
@@ -86,6 +88,18 @@ export default tseslint.config(
               from: "web",
               allow: [
                 "web",
+                "ui-containers",
+                "ui-components",
+                "ui-other",
+                "store",
+                "infrastructure",
+                "core",
+              ],
+            },
+            {
+              from: "desktop",
+              allow: [
+                "desktop",
                 "ui-containers",
                 "ui-components",
                 "ui-other",

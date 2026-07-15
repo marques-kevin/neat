@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "pnpm --filter @app/web dev",
+    "desktop": "pnpm --filter @app/desktop tauri:dev",
+    "desktop:build": "pnpm --filter @app/desktop tauri:build",
     "build": "turbo run build",
     "test": "vitest run",
     "test:watch": "vitest",
