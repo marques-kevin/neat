@@ -5,11 +5,8 @@ const meta = {
   title: "Design System/Badge",
   component: Badge,
   tags: ["autodocs"],
-  args: {
-    children: "Badge",
-  },
+  args: { children: "Badge" },
 } satisfies Meta<typeof Badge>;
-
 export default meta;
 type Story = StoryObj<typeof meta>;
 

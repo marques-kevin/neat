@@ -40,6 +40,7 @@ export default tseslint.config(
       "vitest.config.ts",
       "**/.storybook/**",
       "**/*.stories.{ts,tsx}",
+      "**/scripts/**",
     ],
   },
   eslint.configs.recommended,
