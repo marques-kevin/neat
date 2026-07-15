@@ -1,0 +1,19 @@
+{
+  "app.name": "Triage",
+  "notifications.empty": "No notifications",
+  "notifications.empty.description": "You're all caught up!",
+  "notifications.unread": "{count, plural, =0 {No unread notifications} one {# unread notification} other {# unread notifications}}",
+  "actions.markRead": "Mark read",
+  "actions.pin": "Pin",
+  "actions.unpin": "Unpin",
+  "actions.dismiss": "Dismiss",
+  "actions.sync": "Sync",
+  "actions.syncing": "Syncing…",
+  "settings.language": "Language",
+  "settings.language.auto": "System default",
+  "settings.language.en": "English",
+  "settings.language.fr": "Français",
+  "ui.focusMode": "Focus mode",
+  "ui.focusMode.on": "Focus on",
+  "ui.focusMode.off": "Focus off"
+}

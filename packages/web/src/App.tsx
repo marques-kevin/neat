@@ -1,0 +1,59 @@
+import { StrictMode, useEffect, useMemo } from "react";
+import { bootstrapInMemoryContainer, createInMemoryContainer } from "@app/infrastructure";
+import {
+  createAppStore,
+  selectLocale,
+  syncNotificationsThunk,
+  useAppDispatch,
+  useAppSelector,
+} from "@app/store";
+import { AppIntlProvider, AppShellContainer, resolveEffectiveLocale, StoreProvider } from "@app/ui";
+
+const container = createInMemoryContainer();
+const store = createAppStore(container);
+
+function Bootstrapper({ children }: { children: React.ReactNode }) {
+  const dispatch = useAppDispatch();
+  const localeSetting = useAppSelector(selectLocale);
+
+  useEffect(() => {
+    void (async () => {
+      await bootstrapInMemoryContainer(container);
+      await dispatch(syncNotificationsThunk());
+    })();
+  }, [dispatch]);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      void dispatch(syncNotificationsThunk());
+    }, 60_000);
+
+    return () => window.clearInterval(interval);
+  }, [dispatch]);
+
+  const effectiveLocale = useMemo(() => resolveEffectiveLocale(localeSetting), [localeSetting]);
+
+  return (
+    <AppIntlProvider localeSetting={localeSetting} key={effectiveLocale}>
+      {children}
+    </AppIntlProvider>
+  );
+}
+
+export function App() {
+  return (
+    <StoreProvider store={store}>
+      <Bootstrapper>
+        <AppShellContainer />
+      </Bootstrapper>
+    </StoreProvider>
+  );
+}
+
+export function AppRoot() {
+  return (
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
+}

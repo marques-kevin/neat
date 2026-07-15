@@ -1,0 +1,19 @@
+{
+  "app.name": "Triage",
+  "notifications.empty": "Aucune notification",
+  "notifications.empty.description": "Vous êtes à jour !",
+  "notifications.unread": "{count, plural, =0 {Aucune notification non lue} one {# notification non lue} other {# notifications non lues}}",
+  "actions.markRead": "Marquer lu",
+  "actions.pin": "Épingler",
+  "actions.unpin": "Désépingler",
+  "actions.dismiss": "Archiver",
+  "actions.sync": "Synchroniser",
+  "actions.syncing": "Synchronisation…",
+  "settings.language": "Langue",
+  "settings.language.auto": "Langue système",
+  "settings.language.en": "Anglais",
+  "settings.language.fr": "Français",
+  "ui.focusMode": "Mode focus",
+  "ui.focusMode.on": "Focus activé",
+  "ui.focusMode.off": "Focus désactivé"
+}
