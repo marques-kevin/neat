@@ -1,3 +1,11 @@
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@app/ui/components/ui/select";
+
 export interface LanguageSwitcherProps {
   label: string;
   value: string;
@@ -16,17 +24,18 @@ export function LanguageSwitcher({
   onChange,
 }: LanguageSwitcherProps) {
   return (
-    <label className="flex items-center gap-3 text-sm text-slate-700">
+    <div className="flex items-center gap-3 text-sm text-foreground">
       <span className="font-medium">{label}</span>
-      <select
-        className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-      >
-        <option value="auto">{autoLabel}</option>
-        <option value="en">{englishLabel}</option>
-        <option value="fr">{frenchLabel}</option>
-      </select>
-    </label>
+      <Select value={value} onValueChange={onChange}>
+        <SelectTrigger className="w-[180px]" aria-label={label}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="auto">{autoLabel}</SelectItem>
+          <SelectItem value="en">{englishLabel}</SelectItem>
+          <SelectItem value="fr">{frenchLabel}</SelectItem>
+        </SelectContent>
+      </Select>
+    </div>
   );
 }

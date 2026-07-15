@@ -1,3 +1,5 @@
+import { Card } from "@app/ui/components/ui/card";
+import { ScrollArea } from "@app/ui/components/ui/scroll-area";
 import { NotificationItem } from "../NotificationItem/NotificationItem.js";
 import type { NotificationListItemViewModel } from "./NotificationList.types.js";
 
@@ -27,22 +29,26 @@ export function NotificationList({
   onDismiss,
 }: NotificationListProps) {
   return (
-    <div className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-      {items.map((item) => (
-        <NotificationItem
-          key={item.id}
-          item={item}
-          markReadLabel={markReadLabel}
-          pinLabel={pinLabel}
-          unpinLabel={unpinLabel}
-          dismissLabel={dismissLabel}
-          onSelect={onSelect}
-          onOpen={onOpen}
-          onMarkAsRead={onMarkAsRead}
-          onPin={onPin}
-          onDismiss={onDismiss}
-        />
-      ))}
-    </div>
+    <Card className="overflow-hidden py-0 shadow-sm">
+      <ScrollArea className="max-h-[70vh]">
+        <div className="divide-y divide-border">
+          {items.map((item) => (
+            <NotificationItem
+              key={item.id}
+              item={item}
+              markReadLabel={markReadLabel}
+              pinLabel={pinLabel}
+              unpinLabel={unpinLabel}
+              dismissLabel={dismissLabel}
+              onSelect={onSelect}
+              onOpen={onOpen}
+              onMarkAsRead={onMarkAsRead}
+              onPin={onPin}
+              onDismiss={onDismiss}
+            />
+          ))}
+        </div>
+      </ScrollArea>
+    </Card>
   );
 }

@@ -15,6 +15,7 @@
     "typecheck": "turbo run typecheck",
     "storybook": "pnpm --filter @app/ui storybook",
     "build-storybook": "pnpm --filter @app/ui build-storybook",
+    "ui:add": "pnpm --filter @app/ui ui:add",
     "depcruise": "depcruise packages --config dependency-cruiser.config.cjs",
     "prepare": "husky"
   },

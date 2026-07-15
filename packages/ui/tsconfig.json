@@ -3,7 +3,12 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "noEmit": true,
-    "rootDir": "src"
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@app/ui/*": ["./src/*"],
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["src/**/*.stories.tsx"]

@@ -1,3 +1,5 @@
+import { Card, CardDescription, CardHeader, CardTitle } from "@app/ui/components/ui/card";
+
 export interface EmptyStateProps {
   title: string;
   description: string;
@@ -5,9 +7,11 @@ export interface EmptyStateProps {
 
 export function EmptyState({ title, description }: EmptyStateProps) {
   return (
-    <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-6 py-12 text-center">
-      <p className="text-base font-medium text-slate-900">{title}</p>
-      <p className="mt-2 text-sm text-slate-500">{description}</p>
-    </div>
+    <Card className="border-dashed shadow-none">
+      <CardHeader className="items-center py-12 text-center">
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+    </Card>
   );
 }
