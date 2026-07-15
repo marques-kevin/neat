@@ -53,3 +53,10 @@ export const Syncing: Story = {
     syncLabel: "Syncing…",
   },
 };
+
+export const WithSimulatePush: Story = {
+  args: {
+    simulatePushLabel: "Simulate push notification",
+    onSimulatePush: fn(),
+  },
+};

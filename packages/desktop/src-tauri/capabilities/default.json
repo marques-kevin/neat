@@ -10,6 +10,7 @@
     "core:window:allow-set-focus",
     "core:window:allow-is-visible",
     "opener:default",
-    "positioner:default"
+    "positioner:default",
+    "notification:default"
   ]
 }

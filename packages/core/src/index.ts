@@ -5,6 +5,7 @@ export * from "./domain/errors/NotificationNotFoundError.js";
 export * from "./application/ports/index.js";
 export * from "./application/dto/NotificationFeedItem.js";
 export * from "./application/use-cases/SyncNotifications.js";
+export * from "./application/use-cases/SimulateIncomingNotification.js";
 export * from "./application/use-cases/MarkAsRead.js";
 export * from "./application/use-cases/PinNotification.js";
 export * from "./application/use-cases/ArchiveNotification.js";

@@ -19,6 +19,7 @@
     "@app/store": "workspace:*",
     "@app/ui": "workspace:*",
     "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-notification": "^2",
     "@tauri-apps/plugin-opener": "^2",
     "@tauri-apps/plugin-positioner": "^2",
     "react": "^19.1.0",

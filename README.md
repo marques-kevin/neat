@@ -22,6 +22,8 @@ pnpm desktop:build    # produce a .app / installer
 
 Left-click the menu-bar icon to toggle the panel. Right-click → Quit Triage.
 
+To simulate a macOS push banner: open the panel and click the **megaphone** button (allow notifications when macOS prompts).
+
 ## Tooling
 
 | Command              | Description                            |

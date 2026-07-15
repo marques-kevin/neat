@@ -7,6 +7,7 @@ import {
   selectUnreadCount,
   selectUiState,
   setLocaleThunk,
+  simulateIncomingNotificationThunk,
   syncNotificationsThunk,
   toggleFocusMode,
   useAppDispatch,
@@ -17,7 +18,11 @@ import { AppHeader } from "../components/AppHeader/AppHeader.js";
 import { LanguageSwitcher } from "../components/LanguageSwitcher/LanguageSwitcher.js";
 import { NotificationListContainer } from "./NotificationListContainer.js";
 
-export function AppShellContainer() {
+export interface AppShellContainerProps {
+  enablePushSimulation?: boolean;
+}
+
+export function AppShellContainer({ enablePushSimulation = false }: AppShellContainerProps) {
   const dispatch = useAppDispatch();
   const { formatMessage } = useIntl();
   const unreadCount = useAppSelector(selectUnreadCount);
@@ -44,12 +49,22 @@ export function AppShellContainer() {
               : formatMessage({ id: "actions.sync" })
           }
           isLoading={status === "loading"}
+          simulatePushLabel={
+            enablePushSimulation ? formatMessage({ id: "actions.simulatePush" }) : undefined
+          }
           onSearchChange={setSearchQuery}
           onToggleFocusMode={() => {
             dispatch(toggleFocusMode());
             dispatch(refreshNotificationFeedThunk());
           }}
           onSync={() => dispatch(syncNotificationsThunk())}
+          onSimulatePush={
+            enablePushSimulation
+              ? () => {
+                  void dispatch(simulateIncomingNotificationThunk());
+                }
+              : undefined
+          }
         />
 
         <main className="app-shell-main mx-auto w-full max-w-md px-4 pb-10 sm:px-0">

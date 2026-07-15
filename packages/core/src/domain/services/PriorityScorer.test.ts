@@ -83,6 +83,18 @@ describe("PriorityScorer", () => {
     expect(scored.priorityScore).toBe(10);
     expect(scored.isActionRequired).toBe(false);
   });
+
+  it("marks review requests as notify-worthy", () => {
+    const scorer = new PriorityScorer();
+    const notification = createNotification({ reason: "review_requested" });
+    expect(scorer.shouldNotify(notification)).toBe(true);
+  });
+
+  it("does not notify for star events", () => {
+    const scorer = new PriorityScorer();
+    const notification = createNotification({ reason: "star" });
+    expect(scorer.shouldNotify(notification)).toBe(false);
+  });
 });
 
 describe("MarkAsRead", () => {

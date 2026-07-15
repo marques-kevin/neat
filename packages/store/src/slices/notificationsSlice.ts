@@ -4,6 +4,7 @@ import {
   archiveNotificationThunk,
   markAsReadThunk,
   pinNotificationThunk,
+  simulateIncomingNotificationThunk,
   syncNotificationsThunk,
 } from "../thunks/notificationThunks.js";
 import { refreshNotificationFeedThunk } from "../thunks/refreshFeedThunk.js";
@@ -53,6 +54,10 @@ export const notificationsSlice = createSlice({
         state.unreadCount = state.items.filter((item) => !item.isRead).length;
       })
       .addCase(refreshNotificationFeedThunk.fulfilled, (state, action) => {
+        state.items = action.payload.items;
+        state.unreadCount = action.payload.unreadCount;
+      })
+      .addCase(simulateIncomingNotificationThunk.fulfilled, (state, action) => {
         state.items = action.payload.items;
         state.unreadCount = action.payload.unreadCount;
       });

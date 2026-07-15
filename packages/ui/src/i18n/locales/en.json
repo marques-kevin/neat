@@ -16,6 +16,7 @@
   "actions.more": "More actions",
   "actions.sync": "Sync",
   "actions.syncing": "Syncing…",
+  "actions.simulatePush": "Simulate push notification",
   "settings.language": "Language",
   "settings.language.auto": "System default",
   "settings.language.en": "English",

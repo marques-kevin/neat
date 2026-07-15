@@ -8,13 +8,29 @@ export const syncNotificationsThunk = createAsyncThunk<
   { extra: StoreExtra; state: RootState }
 >("notifications/sync", async (_arg, { extra, getState }) => {
   const { focusMode } = getState().ui;
-  const sync = await extra.container.syncNotifications.execute();
+  const sync = await extra.container.syncNotifications.execute({ emitOsNotifications: true });
   const feed = await extra.container.getNotificationFeed.execute({ focusMode });
 
   return {
     items: feed.items,
     unreadCount: feed.unreadCount,
     syncedAt: sync.syncedAt.toISOString(),
+  };
+});
+
+export const simulateIncomingNotificationThunk = createAsyncThunk<
+  { items: NotificationFeedItem[]; unreadCount: number },
+  void,
+  { extra: StoreExtra; state: RootState }
+>("notifications/simulateIncoming", async (_arg, { extra, getState }) => {
+  await extra.container.simulateIncomingNotification.execute();
+  const feed = await extra.container.getNotificationFeed.execute({
+    focusMode: getState().ui.focusMode,
+  });
+
+  return {
+    items: feed.items,
+    unreadCount: feed.unreadCount,
   };
 });
 

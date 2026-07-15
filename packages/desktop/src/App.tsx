@@ -8,8 +8,10 @@ import {
   useAppSelector,
 } from "@app/store";
 import { AppIntlProvider, AppShellContainer, resolveEffectiveLocale, StoreProvider } from "@app/ui";
+import { TauriOsNotificationService } from "./platform/TauriOsNotificationService.js";
 
-const container = createInMemoryContainer();
+const osNotifications = new TauriOsNotificationService();
+const container = createInMemoryContainer({ osNotifications });
 const store = createAppStore(container);
 
 function Bootstrapper({ children }: { children: React.ReactNode }) {
@@ -18,6 +20,7 @@ function Bootstrapper({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     void (async () => {
+      await osNotifications.ensurePermission();
       await bootstrapInMemoryContainer(container);
       await dispatch(syncNotificationsThunk());
     })();
@@ -44,7 +47,7 @@ export function App() {
   return (
     <StoreProvider store={store}>
       <Bootstrapper>
-        <AppShellContainer />
+        <AppShellContainer enablePushSimulation />
       </Bootstrapper>
     </StoreProvider>
   );

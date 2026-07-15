@@ -1,4 +1,4 @@
-import { Bell, Search } from "lucide-react";
+import { Bell, Megaphone, Search } from "lucide-react";
 import { Button } from "@app/ui/components/ui/button";
 import { Input } from "@app/ui/components/ui/input";
 import { cn } from "@app/ui/lib/utils";
@@ -12,9 +12,11 @@ export interface AppHeaderProps {
   focusModeLabel: string;
   syncLabel: string;
   isLoading: boolean;
+  simulatePushLabel?: string;
   onSearchChange: (value: string) => void;
   onToggleFocusMode: () => void;
   onSync: () => void;
+  onSimulatePush?: () => void;
 }
 
 export function AppHeader({
@@ -26,9 +28,11 @@ export function AppHeader({
   focusModeLabel,
   syncLabel,
   isLoading,
+  simulatePushLabel,
   onSearchChange,
   onToggleFocusMode,
   onSync,
+  onSimulatePush,
 }: AppHeaderProps) {
   return (
     <header className="app-shell-header mx-auto flex w-full max-w-md items-center gap-2 px-4 pt-8 pb-4 sm:px-0">
@@ -44,6 +48,21 @@ export function AppHeader({
           className="h-11 rounded-xl border-border/80 bg-card pl-9 shadow-sm"
         />
       </div>
+
+      {onSimulatePush && simulatePushLabel ? (
+        <Button
+          type="button"
+          variant="outline"
+          size="icon"
+          className="size-11 shrink-0 rounded-xl border-border/80 bg-card shadow-sm"
+          aria-label={simulatePushLabel}
+          title={simulatePushLabel}
+          onClick={onSimulatePush}
+          disabled={isLoading}
+        >
+          <Megaphone className="size-4" />
+        </Button>
+      ) : null}
 
       <Button
         type="button"

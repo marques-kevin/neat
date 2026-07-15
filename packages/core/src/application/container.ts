@@ -3,6 +3,7 @@ import type { GetNotificationFeed } from "./use-cases/GetNotificationFeed.js";
 import type { MarkAsRead } from "./use-cases/MarkAsRead.js";
 import type { PinNotification } from "./use-cases/PinNotification.js";
 import type { SetLocale } from "./use-cases/SetLocale.js";
+import type { SimulateIncomingNotification } from "./use-cases/SimulateIncomingNotification.js";
 import type { SyncNotifications } from "./use-cases/SyncNotifications.js";
 import type { IOsNotificationService } from "./ports/index.js";
 
@@ -13,5 +14,6 @@ export interface AppContainer {
   archiveNotification: ArchiveNotification;
   getNotificationFeed: GetNotificationFeed;
   setLocale: SetLocale;
+  simulateIncomingNotification: SimulateIncomingNotification;
   osNotifications: IOsNotificationService;
 }
